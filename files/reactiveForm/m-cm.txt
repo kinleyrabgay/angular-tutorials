@@ -1,0 +1,36 @@
+<input type="number" placeholder="number" [formControl]="metersControl" />
+<div *ngIf="metersControl.value">
+  {{ metersControl.value }}
+  m:
+  {{ centimeters }}cm
+</div>
+
+
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  metersControl: FormControl = new FormControl(null);
+
+  centimeters: number = 0;
+
+  // External changes
+  constructor() {
+    // Observable
+    this.metersControl.valueChanges.subscribe(() => {
+      console.log('sai');
+      if (this.metersControl.value) {
+        this.centimeters = this.metersControl.value * 100;
+      } else {
+        this.centimeters = 0;
+      }
+    });
+  }
+}

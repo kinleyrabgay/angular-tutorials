@@ -1,0 +1,66 @@
+<div *ngFor="let control of cities.controls; let i = index">
+  <input
+    type="text"
+    placeholder="{{ i }} control"
+    [formControl]="getFormControl(i)"
+  />
+  <button type="button" (click)="removeFormControl(i)">Delete</button>
+</div>
+
+<button type="button" (click)="addFormControl()">Insert</button>
+<button type="button" (click)="showArrayValues()">Get</button>
+
+
+
+import { Component } from '@angular/core';
+import { FormArray, FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  cities: FormArray;
+  sampleData: Array<any> = [];
+
+  constructor() {
+    this.cities = new FormArray([
+      new FormControl(''),
+      new FormControl(''),
+      new FormControl(''),
+    ]);
+
+    // returning the value of existing form value
+    this.cities.valueChanges.subscribe((res) => {
+      console.log(res);
+      this.sampleData = res;
+    });
+  }
+
+  getFormControl(index: number): FormControl {
+    return this.cities.controls[index] as FormControl;
+  }
+
+  // void becasue we are not returing anything
+  showArrayValues(): void {
+    console.log(this.cities.value);
+  }
+
+  // adding new form control
+  addFormControl(): void {
+    this.cities.push(new FormControl(''));
+  }
+
+  // removeAt form control
+  removeFormControl(index: number): void {
+    this.cities.removeAt(index, {
+      // if set to false, valueChange won't be triggered
+      // if false, the event won't be displayed on UI
+      // if true, cals valueChange
+      emitEvent: false,
+    });
+  }
+}

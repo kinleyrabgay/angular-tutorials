@@ -1,0 +1,61 @@
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+  <input
+    type="text"
+    placeholder="username"
+    ngModel
+    name="username"
+    [ngModelOptions]="{ updateOn: 'blur' }"
+    (ngModelChange)="changeEvent(loginForm)"
+  />
+  <br /><br />
+  <input
+    type="password"
+    placeholder="password"
+    ngModel
+    name="password"
+    (ngModelChange)="changeEvent(loginForm)"
+  />
+  <br /><br />
+
+  <button type="submit">Login</button>
+</form>
+
+<form #confirmForm="ngForm" (ngSubmit)="confirmMethod(confirmForm)">
+  <input
+    type="password"
+    placeholder="password"
+    ngModel
+    [ngModelOptions]="{ standalone: true }"
+  />
+  <br /><br />
+  <input type="password" placeholder="new password" ngModel name="somename" />
+  <br /><br />
+  <button type="submit">Confirm btn</button>
+</form>
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  login(formDetails: any) {
+    const elment = formDetails.form.value;
+    console.log(elment.password);
+    console.log(formDetails.form.controls['username'].value, 'username');
+    console.log(formDetails.form.controls['password'].value, 'password');
+  }
+
+  confirmMethod(confirmValue: any) {
+    console.log(confirmValue.form.value);
+  }
+
+  changeEvent(confirmForm: any) {
+    console.log(confirmForm.form.value);
+  }
+}

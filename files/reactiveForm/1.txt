@@ -1,0 +1,49 @@
+<input type="email" placeholder="email" [formControl]="email" />
+<div *ngIf="email.invalid && (email.touched || email.dirty)">
+  <p *ngIf="email?.errors?.['required']">Email is required</p>
+  <p *ngIf="email?.errors?.['pattern']">Enter valid email address</p>
+</div>
+<br /><br />
+<input type="password" placeholder="pass" [formControl]="password" />
+<div *ngIf="password.invalid && (password.touched || password.dirty)">
+  <p *ngIf="password?.errors?.['required']">Password is required</p>
+  <p *ngIf="password?.errors?.['pattern']">
+    Enter password with minimum of 5 char
+  </p>
+</div>
+<br /><br />
+<button type="button" (click)="login()">Login</button>
+{{ email.value }}
+
+
+import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  email: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    ),
+  ]);
+
+  password: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern(/(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&]{5,10}/),
+  ]);
+
+  login() {
+    console.log(this.email.value, '****', this.password.value);
+    return {
+      email: this.email,
+      password: this.password,
+    };
+  }
+}

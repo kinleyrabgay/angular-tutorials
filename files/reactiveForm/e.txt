@@ -1,0 +1,34 @@
+<input type="text" placeholder="username" [formControl]="username" />
+
+{{ username.errors | json }}
+
+<div *ngIf="username.invalid && (username.touched || username.dirty)">
+  <p *ngIf="username?.errors?.['required']">username is required</p>
+</div>
+
+<button type="button" (click)="changeValidations()">Change Form Control</button>
+
+
+
+import { Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  username: FormControl = new FormControl('');
+
+  changeFormControl() {
+    this.username.setValue('username value');
+  }
+
+  changeValidations() {
+    this.username.setValidators([Validators.required]);
+    this.username.updateValueAndValidity();
+  }
+}

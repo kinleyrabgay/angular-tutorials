@@ -1,0 +1,9 @@
+.mt-10 {
+  margin-top: 10px;
+}
+
+.error {
+  margin: 0;
+  color: red;
+  font-size: 12px;
+}

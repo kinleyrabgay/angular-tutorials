@@ -1,0 +1,33 @@
+<form [formGroup]="loginFormGroup">
+  <input type="email" placeholder="email" formControlName="email" />
+  <!-- <br /><br />
+  <input type="password" placeholder="password" formControlName="password" />
+  <br /><br />
+  <button type="button" (click)="login()">Login</button> -->
+  <p>{{ loginFormGroup.get("email")?.value }}</p>
+</form>
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  loginFormGroup: FormGroup;
+  constructor() {
+    this.loginFormGroup = new FormGroup({
+      email: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
+
+  login() {
+    // We can get the payload
+    console.log(this.loginFormGroup.value);
+  }
+}

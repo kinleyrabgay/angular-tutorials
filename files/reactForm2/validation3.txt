@@ -1,0 +1,57 @@
+<form [formGroup]="loginFormGroup" (ngSubmit)="login()">
+  <input type="email" placeholder="email" formControlName="email" />
+  <div
+    *ngIf="
+      getFormControl('email')?.invalid &&
+      (getFormControl('email')?.touched || getFormControl('email')?.dirty)
+    "
+  >
+    <span *ngIf="getFormControl('email')?.errors?.['required']">
+      Username is required
+    </span>
+  </div>
+  <br /><br />
+  <input type="password" placeholder="password" formControlName="password" />
+  <div
+    *ngIf="
+      getFormControl('password')?.invalid &&
+      (getFormControl('password')?.touched || getFormControl('password')?.dirty)
+    "
+  >
+    <span *ngIf="getFormControl('password')?.errors?.['required']">
+      Password is required
+    </span>
+  </div>
+  <br /><br />
+  <button type="submit" [disabled]="loginFormGroup.invalid">Login</button>
+</form>
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  loginFormGroup: FormGroup;
+  constructor() {
+    this.loginFormGroup = new FormGroup({
+      email: new FormControl('', Validators.compose([Validators.required])),
+      password: new FormControl('', Validators.compose([Validators.required])),
+    });
+  }
+
+  login() {
+    // We can get the payload
+    console.log(this.loginFormGroup.value);
+    console.log(this.loginFormGroup.valid);
+  }
+
+  getFormControl(formControlName: string) {
+    return this.loginFormGroup.get(formControlName);
+  }
+}

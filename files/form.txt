@@ -1,0 +1,92 @@
+<form action="" (ngSubmit)="register()" #registerForm="ngForm">
+  <div>
+    <input
+      type="text"
+      placeholder="username"
+      name="username"
+      [(ngModel)]="registerObj.username"
+      required
+      #name="ngModel"
+      [pattern]="passwordPattern"
+    />
+    <div *ngIf="name.invalid && (name.touched || name.dirty)">
+      <span *ngIf="name?.errors?.['pattern']"
+        >Please enter a valid email address
+      </span>
+      <span *ngIf="name?.errors?.['required']">This field is required</span>
+    </div>
+  </div>
+  <br /><br />
+
+  <div>
+    <input
+      type="password"
+      placeholder="password"
+      name="password"
+      [(ngModel)]="registerObj.password"
+      required
+      #password="ngModel"
+      [pattern]="passwordPattern"
+    />
+    <!-- Exist -->
+    <div *ngIf="password.invalid && (password.touched || password.dirty)">
+      <span *ngIf="password?.errors?.['pattern']"
+        >This field should have minimum of 5 character and 1 alp, 1 num, 1
+        special
+      </span>
+      <span *ngIf="password?.errors?.['required']">This field is required</span>
+    </div>
+  </div>
+  <br /><br />
+
+  <div>
+    <select
+      name="gender"
+      title="gender"
+      [(ngModel)]="registerObj.gender"
+      required
+      #gender="ngModel"
+    >
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+    <div *ngIf="gender.invalid && (gender.touched || gender.dirty)">
+      <span>This field is required</span>
+    </div>
+  </div>
+
+  <br /><br />
+  <button type="submit" [disabled]="registerForm.invalid">Register</button>
+</form>
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  registerObj = {
+    username: '',
+    password: '',
+    gender: '',
+  };
+
+  passwordPattern = new RegExp(
+    /(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&]{5,10}/
+  );
+
+  emailPattern = new RegExp(
+    /^([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/
+  );
+
+  usernameValue: string = '';
+  error: string = 'Password must be of 8 length';
+
+  register() {
+    console.log(this.registerObj);
+  }
+}

@@ -1,0 +1,20 @@
+<form action="" #loginForm="ngForm">
+  <input type="text" placeholder="username" ngModel name="username" />
+  <br /><br />
+  <input type="password" placeholder="password" ngModel name="password" />
+  <br /><br />
+
+  <button (click)="login(loginForm)">Login</button>
+</form>
+
+login(formDetails: any) {
+    console.log(formDetails);
+  }
+
+#update
+login(formDetails: any) {
+    const elment = formDetails.form.value;
+    console.log(elment.password);
+    console.log(formDetails.form.controls['username'].value, 'username');
+    console.log(formDetails.form.controls['password'].value, 'password');
+  }

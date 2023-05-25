@@ -133,3 +133,112 @@
     </div>
   </form>
 </div>
+
+
+
+import { Component } from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  registerAddress: FormGroup;
+
+  obj = {
+    name: 'sc',
+    email: 'sc@123',
+    addresses: [
+      {
+        id: 1,
+        cityName: 'k',
+        stateName: 'r',
+        streetName: 's',
+        landmark: 'c',
+      },
+      {
+        id: 2,
+        cityName: 'c',
+        stateName: 's',
+        streetName: 'c',
+        landmark: 's',
+      },
+    ],
+  };
+
+  // Each formGroup creates object
+  constructor() {
+    this.registerAddress = new FormGroup({
+      name: new FormControl(
+        '',
+        Validators.compose([Validators.required, Validators.minLength(5)])
+      ),
+      email: new FormControl(
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(
+            /(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-z0-9!@#$%^&]{5,10}/
+          ),
+        ])
+      ),
+      addresses: new FormArray([]),
+    });
+
+    // first no address, following code cretes an address before assigning
+    this.obj.addresses.forEach(() => {
+      this.addAddress();
+    });
+
+    this.registerAddress.patchValue(this.obj);
+  }
+
+  public get addressesAsFormArray(): FormArray {
+    return this.registerAddress.get('addresses') as FormArray;
+  }
+
+  submit() {
+    console.log(this.registerAddress.value);
+  }
+
+  addAddress() {
+    this.addressesAsFormArray.push(this.getAddressFromGroup());
+  }
+
+  // Adding
+  getAddressFromGroup(): FormGroup {
+    return new FormGroup({
+      id: new FormControl(this.addressesAsFormArray.controls.length + 1),
+      cityName: new FormControl('', Validators.compose([Validators.required])),
+      stateName: new FormControl('', Validators.compose([Validators.required])),
+      streetName: new FormControl(
+        '',
+        Validators.compose([Validators.required])
+      ),
+      landMark: new FormControl(''),
+    });
+  }
+
+  removeAddress(index: number): void {
+    this.addressesAsFormArray.removeAt(index);
+  }
+
+  isFieldValid(formGroup: any, formConntrolName: string) {
+    if (
+      formGroup.get(formConntrolName)?.invalid &&
+      (formGroup.get(formConntrolName)?.touched ||
+        formGroup.get(formConntrolName)?.dirty)
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  getFieldErrorByType(formGroup: any, formConntrolName: string, type: string) {
+    return formGroup.get(formConntrolName)?.errors?.[type];
+  }
+}

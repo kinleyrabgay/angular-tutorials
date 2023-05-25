@@ -1,0 +1,5 @@
+# FormsModule
+<input type="text" placeholder="ng model test" [(ngModel)]="modelTest" />
+<p>{{ modelTest }}</p>
+
+modelTest = ''

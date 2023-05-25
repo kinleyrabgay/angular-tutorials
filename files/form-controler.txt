@@ -1,0 +1,39 @@
+<!-- ngModel with object -->
+<form action="" (ngSubmit)="loginSubmit()">
+  <input
+    type="text"
+    placeholder="username"
+    [(ngModel)]="loginFormObj.username"
+    name="username"
+  />
+  <br /><br />
+  <input
+    type="password"
+    placeholder="password"
+    [(ngModel)]="loginFormObj.password"
+    name="password"
+  />
+  <br /><br />
+  <button type="submit">Login</button>
+</form>
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  loginFormObj = {
+    username: '',
+    password: '',
+  };
+
+  loginSubmit() {
+    console.log(this.loginFormObj);
+  }
+}

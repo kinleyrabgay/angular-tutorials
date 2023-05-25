@@ -1,0 +1,33 @@
+<ng-container
+  *ngTemplateOutlet="
+    reusable;
+    context: { $implicit: 'inbuilt value', name: '1st container' }
+  "
+></ng-container>
+
+<h4>Something here</h4>
+
+<!-- <h1 class="color-red">How are you?</h1> -->
+<ng-container
+  *ngTemplateOutlet="reusable; context: { name: 'How are you?' }"
+></ng-container>
+
+***** dynamic value from controller *****
+<div>
+  <ng-container
+    *ngTemplateOutlet="reusable; context: objContext"
+  ></ng-container>
+</div>
+
+*** dynamci without ng-container
+<div>
+  <ng-template
+    [ngTemplateOutlet]="reusable"
+    [ngTemplateOutletContext]="objContext"
+  ></ng-template>
+</div>
+
+<ng-template #reusable let-name="name" let-builtValue>
+  {{ builtValue }}
+  <h1 class="color-red">{{ name }}</h1>
+</ng-template>

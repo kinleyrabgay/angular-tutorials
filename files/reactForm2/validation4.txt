@@ -1,0 +1,45 @@
+<form [formGroup]="resetFormGroup">
+  <input type="text" placeholder="username" formControlName="username" />
+
+  <br /><br />
+  <input type="password" placeholder="password" formControlName="password" />
+
+  <br /><br />
+  <button type="button" (click)="resetForm()">Reset</button>
+</form>
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css'],
+})
+export class AppComponent {
+  title = 'tutorial';
+
+  defaultFormValues = {
+    username: 'sai@gmail.com',
+    password: '123445',
+  };
+
+  resetFormGroup: FormGroup;
+  constructor() {
+    this.resetFormGroup = new FormGroup({
+      username: new FormControl(''),
+      password: new FormControl(''),
+    });
+  }
+
+  resetForm() {
+    // #1
+    // this.resetFormGroup.get('username')?.value = '123';
+
+    // Rule: Expects all value (username and password) (accepts object as it is of formGroup)
+    this.resetFormGroup.setValue(this.defaultFormValues);
+    this.resetFormGroup.patchValue(this.defaultFormValues);
+
+  }
+}

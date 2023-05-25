@@ -1,0 +1,20 @@
+# 1
+<input placeholder="enter some text" (input)="onInput($event)" />
+<p id="para"></p>
+
+onInput(ev: any) {
+  console.log(ev.target.value);
+  const element = document.getElementById('para');
+  if (element) {
+    element.innerHTML = ev.target.value;
+  }
+}
+
+# 2
+<input placeholder="enter some text" (input)="onInput($event)" />
+<p id="para">{{ inputValue }}</p>
+
+inputValue = '';
+onInput(ev: any) {
+  this.inputValue = ev.target.value;
+}
